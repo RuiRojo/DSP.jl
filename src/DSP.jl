@@ -56,5 +56,13 @@ include("estimation.jl")
 using Reexport
 @reexport using .Util, .Windows, .Periodograms, .Filters, .LPC, .Unwrap, .Estimation
 
+
+using Requires
+function __init__()
+    @require Unitful="1986cc42-f94f-5a68-af5c-568840ba703d" include("unitful.jl")
+end
+
+
+
 include("deprecated.jl")
 end

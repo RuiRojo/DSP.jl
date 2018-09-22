@@ -2,6 +2,8 @@ julia 0.6
 Compat 1.0
 Polynomials 0.1.0
 Reexport
+Requires
+Unitful
 SpecialFunctions
 AbstractFFTs
 FFTW

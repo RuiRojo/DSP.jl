@@ -1,6 +1,6 @@
 # This file was formerly a part of Julia. License is MIT: https://julialang.org/license
 
-using Compat, Compat.Test, DSP
+using Compat, Compat.Test, DSP, Unitful
 import DSP: filt, filt!, deconv, conv, conv2, xcorr
 
 @testset "filt" begin
@@ -56,12 +56,17 @@ if :xcorr in names(DSP) # VERSION >= v"0.7.0-DEV.602"
     end
 end
 
+
 @testset "conv" begin
     # Convolution
     a = [1., 2., 1., 2.]
     b = [1., 2., 3.]
     @test conv(a, b) ≈ [1., 4., 8., 10., 7., 6.]
     @test conv(complex.(a, ones(4)), complex(b)) ≈ complex.([1., 4., 8., 10., 7., 6.], [1., 3., 6., 6., 5., 3.])
+
+    @test conv(a.*u"s", b.*u"m") ≈ [1., 4., 8., 10., 7., 6.]*u"m*s"
+    @test conv(a, b.*u"m") ≈ [1., 4., 8., 10., 7., 6.]*u"m"
+    @test conv(a.*u"s", b) ≈ [1., 4., 8., 10., 7., 6.]*u"s"
 end
 
 @testset "deconv" begin
